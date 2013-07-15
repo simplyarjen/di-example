@@ -12,7 +12,7 @@ public class ProviderFactory {
   public static <T> Provider<T> create(Class<T> clazz) {
     Provider<T> result = createConstructing(clazz);
     result = createFields(clazz, result);
-    result = new SingletonProvider(result);
+    result = new SingletonProvider<T>(result);
     return result;
   }
   

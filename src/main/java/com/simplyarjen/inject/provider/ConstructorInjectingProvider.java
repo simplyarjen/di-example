@@ -16,13 +16,13 @@ class ConstructorInjectingProvider<T> implements Provider<T> {
   
   @Override
   public T provide(Context context) {
-    return Classes.newInstance(constructor, getAll(context, parameterClasses));
+    return Classes.newInstance(constructor, getParameters(context));
   }
   
-  private Object[] getAll(Context context, Class<?>... classes) {
-    Object[] result = new Object[classes.length];
-    for (int index = 0; index < classes.length; index++) {
-      result[index] = context.get(classes[index]);
+  private Object[] getParameters(Context context) {
+    Object[] result = new Object[parameterClasses.length];
+    for (int index = 0; index < parameterClasses.length; index++) {
+      result[index] = context.get(parameterClasses[index]);
     }
     return result;
   }

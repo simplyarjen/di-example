@@ -17,8 +17,9 @@ class ProviderRegistry {
   private final Map<Class<?>, Provider<?>> delegate = new HashMap<>();
   
   public <T> void put(Class<T> clazz, Provider<T> provider) {
-    for (Class<?> assignable : Classes.getAssignableFrom(clazz)) {    
-      delegate.put(assignable, contains(assignable) ? AMBIGUOUS : provider); 
+    for (Class<?> assignable : Classes.getAssignableFrom(clazz)) {
+      Provider<?> actual = contains(assignable) ? AMBIGUOUS : provider;
+      delegate.put(assignable, actual);
     }
   }
   

@@ -31,21 +31,21 @@ public final class Classes {
   
   public static Collection<Class<?>> getSuperclasses(Class<?> clazz) {
     Set<Class<?>> result = new HashSet<>();
-    addSuperclasses(clazz, result);
+    addWithSuperclasses(clazz, result);
     return result;
   }
   
   public static Collection<Class<?>> getAssignableFrom(Class<?> clazz) {
     Set<Class<?>> result = new HashSet<>();
-    result.addAll(getSuperclasses(clazz));
+    addWithSuperclasses(clazz, result);
     result.addAll(Arrays.asList(clazz.getInterfaces()));
     return result;
   }
   
-  private static void addSuperclasses(Class<?> clazz, Set<Class<?>> result) {
+  private static void addWithSuperclasses(Class<?> clazz, Set<Class<?>> result) {
     if (clazz != null) {
       result.add(clazz);
-      addSuperclasses(clazz.getSuperclass(), result);
+      addWithSuperclasses(clazz.getSuperclass(), result);
     }
   }
 }

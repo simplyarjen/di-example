@@ -2,6 +2,7 @@ package com.simplyarjen.inject.reflection;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.ArrayList;
 
@@ -31,10 +32,18 @@ public final class Injectables {
   
   private static void findFields(Class<?> clazz, Collection<Field> result) {
     for (Field field : clazz.getDeclaredFields()) {
-      if (field.isAnnotationPresent(Inject.class)) {
+      if (isInjectable(field)) {
         field.setAccessible(true);
         result.add(field);
       }
     }
+  }
+  
+  private static boolean isInjectable(Field field) {
+    int modifier = field.getModifiers();
+    if (Modifier.isStatic(modifier) || Modifier.isFinal(modifier)) {
+      return false;
+    }
+    return field.isAnnotationPresent(Inject.class);
   }
 }
